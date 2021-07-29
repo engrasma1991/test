@@ -1,57 +1,72 @@
 from selenium import webdriver
-***************************************TestCase:Validation********************************
-#load chrome driver
-driver=webdriver.Chrome(executable_path=r"C:\Users\H.A.R\Desktop\Testing\chromedriver.exe")
-#go to www.d3a.io
-driver.get('https://www.d3a.io')
-#click login button
-login_button=driver.find_element_by_xpath('//*[@id="root"]/main/header/div/a').click()
-#switch url to https://www.d3a.io/login
-driver.get('https://www.d3a.io/login')
-#Enter email
-email=input('Enter a Email Address:')
-#Enter password
-password=input('Enter a Password:')
-#send email 
-email_text=driver.find_element_by_xpath('//*[@id="email"]')
-email_text.send_keys(email)
-#send password
-pass_text=driver.find_element_by_xpath('//*[@id="password"]')
-pass_text.send_keys(password)
-#submit
-submit=driver.find_element_by_xpath('//*[@id="root"]/main/div[2]/div/div/div/form/div[3]/button')
-submit.click()
-***************************************TestCase:Create a Project********************************
-#Create a Project
-#Click on NewProject Button
-new_project_btn=driver.find_element_by_xpath('//*[@id="root"]/div/div[2]/header/div[3]/button[2]/span')
-new_project_btn.click()
-#Enter a Name
-name=input('Enter Project Name:')
-#Enter Description
-description=input('Enter Project Description:')
-#send project project name
-name_text=driver.find_element_by_xpath('//*[@id="input-field-name"]')
-name_text.send_keys(name)
-#send project project description
-description_text=driver.find_element_by_xpath('//*[@id="textarea-field-nameTextArea"]')
-description_text.send_keys(description)
-#Click on ADD
-add_btn=driver.find_element_by_xpath('/html/body/div[5]/div/div/div[2]/button')
-add_btn.click()
-#check added project listed correctly or not
-saved_project=driver.find_element_by_xpath('//*[@id="root"]/div/div[2]/div[2]/div/div/section/div[1]/div[1]/div[1]')
-saved_project.is_displayed()
-***************************************TestCase:Create a Simulation********************************
-#Click on Expand to add Simulation
-expand=driver.find_element_by_xpath('//*[@id="root"]/div/div[2]/div[2]/div/div/section/div[1]/div[1]/div[1]/span/div[1]/div/svg')
-expand.click()
-#Click on SimulationButton
-simulation_btn=driver.find_element_by_xpath('//*[@id="root"]/div/div[2]/div[2]/div/div/section/div[1]/div[2]/button')
-simulation_btn.click()
-#Create a Empty Simulation
-new_simulation=driver.find_element_by_xpath('//*[@id="root"]/div/div[2]/div[2]/div/div/div[2]/button')
-new_simulation.click()
-#Check simulation listed correctly or not
-saved_simulation=driver.find_element_by_xpath('//*[@id="root"]/div/div[2]/div[2]/div/div/section/div[1]/div[2]/div/div[1]/div/div[1]/div[1]/div/p')
-saved_simulation.is_displayed()
+from selenium.webdriver.support.ui import Select
+import time
+#load chrome drive
+PATH=r"C:\Users\Umar\Desktop\Web Scrapping\chromedriver.exe"
+driver=webdriver.Chrome(PATH)
+try:
+    driver.get('https://www.d3a.io/')
+    click_login_button=driver.find_element_by_xpath('//*[@id="root"]/main/header/div/a')
+    click_login_button.click()
+    time.sleep(2)
+    email_text=driver.find_element_by_name('email')
+    email_text.send_keys('umar.naeem551@gmail.com')
+    pass_text=driver.find_element_by_name('password')
+    pass_text.send_keys('umarnaeem123')
+    login=driver.find_element_by_xpath('//*[@id="root"]/main/div[2]/div/div/div/form/div[3]/button')
+    login.submit()
+    time.sleep(2)
+    project_button=driver.find_element_by_xpath('//*[@id="root"]/div/div[1]/nav/div[2]/div[1]/div[2]/div/div/button')
+    project_button.click()
+    time.sleep(2)
+    new_project=driver.find_element_by_xpath('//*[@id="root"]/div/div[2]/header/div[3]/button[2]')
+    new_project.click()
+    #create new project
+    time.sleep(2)
+    project_name=driver.find_element_by_name('name')
+    project_name.send_keys('My Project')
+    project_desc=driver.find_element_by_name('nameTextArea')
+    project_desc.send_keys('Tesing')
+    #getting value for checking our project listed or not  
+    text=project_name.get_attribute('value')
+    #add project
+    project_add=driver.find_element_by_xpath('/html/body/div[5]/div/div/div[2]/button')
+    #prop = project_add.is_enabled()
+    #print(prop)
+    project_add.click()
+    time.sleep(2)
+    listed_project = driver.find_element_by_xpath('//*[@id="root"]/div/div[2]/div[2]/div/div')
+    listed_project=listed_project.text
+    if text in listed_project:
+        print('Project listed correctly')
+        click_on_project=driver.find_element_by_xpath('//*[@id="root"]/div/div[2]/div[2]/div/div/section/div[1]/div/div[1]/span/span')
+        click_on_project.click()
+        time.sleep(2)
+        add_simulation=driver.find_element_by_xpath('//*[@id="root"]/div/div[2]/div[2]/div/div/section/div[1]/div[2]/button')
+        add_simulation.click()
+        time.sleep(2)
+        next_button=driver.find_element_by_xpath('//*[@id="root"]/div/div[2]/div[2]/div/div/div[2]/button')
+        next_button.click()
+        time.sleep(2)
+        project_button=driver.find_element_by_xpath('//*[@id="root"]/div/div[1]/nav/div[2]/div[1]/div[2]/div/div/button')
+        project_button.click()
+        time.sleep(2)
+        listed_simulation=driver.find_element_by_xpath('//*[@id="root"]/div/div[2]/div[2]/div/div/section/div[1]/div[2]/div/div[1]/div/div[1]/div[1]/div/p')
+        listed_simulation=listed_simulation.text
+        if 'default simulation' in listed_simulation:
+            print('Simulation Listed Correctly')
+        else:
+            print('Simulation NOT Listed Correctly')
+
+
+    
+    else:
+        print('Project not Listed Correctly')
+    
+
+
+except:
+    print('Error')
+
+
+
