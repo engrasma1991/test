@@ -12,7 +12,7 @@ try:
     email_text=driver.find_element_by_name('email')
     email_text.send_keys('test@yopmail.com')
     pass_text=driver.find_element_by_name('password')
-    pass_text.send_keys('test123')
+    pass_text.send_keys('Qwe123!@#')
     login=driver.find_element_by_xpath('//*[@id="root"]/main/div[2]/div/div/div/form/div[3]/button')
     login.submit()
     time.sleep(2)
